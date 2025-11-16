@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "Test OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Test POST request",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "login": "test",
+        "password": "test123"
+      },
+      "expectedStatus": 500,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
